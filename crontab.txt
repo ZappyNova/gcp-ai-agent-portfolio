@@ -1,0 +1,23 @@
+# ── Cron Schedule ──────────────────────────────────────────────────────────
+# All times in America/Chicago
+# Maintained by: systemd timers + crontab
+
+# ── Garden Water Check ──
+# Runs daily at 7:00 AM CT
+# Fetches Tempest weather data, evaluates 21 Japanese maples,
+# posts watering recommendations to Discord #garden-chat
+0 7 * * * cd /home/pi/openclaw && python3 scripts/garden-water-check.py --discord
+
+# ── Weather Forecast ──
+# Runs daily at 6:00 AM CT
+# Posts daily weather summary and alerts to Discord
+0 6 * * * cd /home/pi/openclaw && python3 scripts/daily-weather.py --discord
+
+# ── Backup ──
+# Runs daily at 2:00 AM CT
+# Commits and pushes workspace changes to GitHub
+0 2 * * * cd /home/pi/openclaw/workspace && git add -A && git commit -m "daily backup $(date +\%Y-\%m-\%d)" && git push
+
+# ── Notes ──
+# Use `crontab -e` to edit on Raspberry Pi OS
+# Log output: add >> /var/log/cron.log 2>&1 to any line for debugging

@@ -1,0 +1,60 @@
+# Example configuration — replace placeholders with your own values.
+# This file is safe for public repos; never commit the real config.yaml.
+
+agent:
+  name: "GCP AI Agent Portfolio"
+  description: "Multi-LLM AI agent with Discord integration and automation"
+
+channels:
+  discord:
+    enabled: true
+    token: "${DISCORD_BOT_TOKEN}"   # Set in .env or environment
+    guilds:
+      - id: YOUR_GUILD_ID
+        name: "Your Server"
+        channels:
+          - id: YOUR_CHANNEL_ID
+            name: "garden-chat"
+          - id: YOUR_CHANNEL_ID
+            name: "weather"
+
+llm:
+  provider: "openrouter"
+  api_key: "${OPENROUTER_API_KEY}"
+  default_model: "openrouter/deepseek/deepseek-v4-flash"
+  fallback_models:
+    - "openrouter/x-ai/grok-4.3"
+    - "openrouter/google/gemini-2.5-flash-lite"
+
+automation:
+  garden_check:
+    schedule: "0 7 * * *"       # Daily 7 AM CT
+    script: "scripts/garden-water-check.py"
+    channel: "garden-chat"
+
+  weather_alert:
+    schedule: "0 6 * * *"       # Daily 6 AM CT
+    enabled: true
+
+weather:
+  station_id: YOUR_STATION_ID
+  units:
+    temp: "f"
+    wind: "mph"
+    precip: "in"
+
+  alerts:
+    high_wind:
+      threshold_mph: 25
+      message: "⚠️ High wind alert: gusting >{threshold} mph — check newly planted trees"
+    frost:
+      threshold_f: 35
+      message: "❄️ Frost possible tonight — protect tender plants"
+    heavy_rain:
+      threshold_inches: 0.5
+      message: "🌧 Heavy rain detected — check drainage around maples"
+
+backup:
+  enabled: true
+  schedule: "0 2 * * *"         # Daily 2 AM CT
+  target: "github.com/YOUR_USER/YOUR_REPO"

@@ -1,0 +1,31 @@
+# ── Secrets & environment ──
+.env
+secrets.json
+*.pem
+*.key
+
+# ── Node / OpenClaw ──
+node_modules/
+config.yaml
+gateway.yaml
+openclaw.json
+
+# ── Python ──
+__pycache__/
+*.pyc
+*.pyo
+venv/
+.venv/
+
+# ── OS ──
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# ── Logs ──
+*.log
+logs/
+
+# ── Git ──
+.git
